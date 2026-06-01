@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KnowledgeStack | Tech Ideas &amp; AI Project Generation</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Manrope:wght@400;600&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            "colors": {
+                "on-primary-container": "#6a644f",
+                "on-primary": "#35301e",
+                "on-secondary-container": "#95baf6",
+                "on-secondary-fixed-variant": "#1d477c",
+                "on-tertiary-container": "#7b6100",
+                "inverse-surface": "#e5e2e1",
+                "outline-variant": "#4a473e",
+                "secondary": "#a7c8ff",
+                "primary-container": "#ebe2c8",
+                "primary": "#ffffff",
+                "tertiary-fixed-dim": "#e9c349",
+                "on-surface": "#e5e2e1",
+                "surface-container-low": "#1c1b1b",
+                "outline": "#959086",
+                "secondary-container": "#20497f",
+                "surface-container-highest": "#353535",
+                "primary-fixed": "#ebe2c8",
+                "on-tertiary": "#3c2f00",
+                "inverse-primary": "#645e49",
+                "surface-variant": "#353535",
+                "on-background": "#e5e2e1",
+                "secondary-fixed-dim": "#a7c8ff",
+                "error-container": "#93000a",
+                "inverse-on-surface": "#313030",
+                "primary-fixed-dim": "#cec6ad",
+                "surface-bright": "#393939",
+                "tertiary-container": "#ffe088",
+                "surface-container": "#20201f",
+                "error": "#ffb4ab",
+                "tertiary": "#ffffff",
+                "on-tertiary-fixed": "#241a00",
+                "tertiary-fixed": "#ffe088",
+                "surface-dim": "#131313",
+                "on-error-container": "#ffdad6",
+                "on-primary-fixed": "#1f1c0b",
+                "secondary-fixed": "#d5e3ff",
+                "on-secondary-fixed": "#001b3c",
+                "surface-tint": "#cec6ad",
+                "surface-container-lowest": "#0e0e0e",
+                "on-tertiary-fixed-variant": "#574500",
+                "on-primary-fixed-variant": "#4c4733",
+                "surface-container-high": "#2a2a2a",
+                "background": "#131313",
+                "on-secondary": "#003061",
+                "surface": "#131313",
+                "on-surface-variant": "#cbc6ba",
+                "on-error": "#690005"
+            },
+            borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+            spacing: { "container-max": "1200px", "margin-mobile": "16px", "margin-desktop": "64px", unit: "8px", gutter: "24px" },
+            fontFamily: { "display-lg": ["Playfair Display"], "label-sm": ["IBM Plex Sans"], "headline-lg-mobile": ["Playfair Display"], "body-md": ["Manrope"], "title-md": ["Manrope"], "headline-lg": ["Playfair Display"] },
+            fontSize: { "display-lg": ["64px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }], "label-sm": ["12px", { lineHeight: "1.4", letterSpacing: "0.1em", fontWeight: "600" }], "headline-lg-mobile": ["32px", { lineHeight: "1.2", fontWeight: "600" }], "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }], "title-md": ["20px", { lineHeight: "1.5", letterSpacing: "0.05em", fontWeight: "600" }], "headline-lg": ["40px", { lineHeight: "1.2", fontWeight: "600" }] }
+        },
+    },
+}
+</script>
+<style>
+.noise-bg { background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png"); background-blend-mode: overlay; }
+.modal-gradient-border { border: 1px solid transparent; background: linear-gradient(#1A1A1A, #1A1A1A) padding-box, linear-gradient(to bottom right, rgba(244, 235, 208, 0.3), rgba(244, 235, 208, 0.05)) border-box; }
+.parchment-accent { background-color: #EBE2C8; color: #1F1C0B; }
+.brass-dot::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #D4AF37; border-radius: 50%; }
+.idea-card { border: 1px solid transparent; background: linear-gradient(#1c1b1b, #1c1b1b) padding-box, linear-gradient(to bottom right, rgba(244, 235, 208, 0.15), rgba(244, 235, 208, 0.03)) border-box; }
+.loading-dots::after { content: ''; animation: dots 1.5s steps(3, end) infinite; }
+@keyframes dots { 0% { content: ''; } 33% { content: '.'; } 66% { content: '..'; } 100% { content: '...'; } }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden selection:bg-secondary/30">
+<div class="fixed inset-0 noise-bg pointer-events-none opacity-40 z-0"></div>
+<nav class="fixed top-0 w-full h-[72px] z-50 bg-background/80 backdrop-blur-xl border-b border-primary/20">
+<div class="max-w-[1200px] mx-auto px-margin-desktop flex items-center justify-between w-full h-full">
+<div class="flex items-center gap-gutter">
+<span class="font-display-lg text-title-md font-bold tracking-tighter text-primary">KnowledgeStack</span>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="/">HOME</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="/research">RESEARCH</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="/code-review">CODE REVIEW</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-primary relative brass-dot" href="/tech-ideas">TECH IDEAS</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">settings</span>
+<img alt="Profile" class="w-10 h-10 rounded-full border border-primary/20 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6m-1dAYx1-DJLjcnzei7EtQHcnsgAWrAE1J0YvnI6QDMK5oOBL_OKEWMvBsg6a7afkOWf6yFAUBnmhImys2Uq6x9bx06eVH97jE_9znCR6l-X9krYSPBNZesDTicDZT4VzlptlfYeIvhCXATnhik9wKUOXqOI-tyMmGoFDKyn9G4i8uvqNLJpHtO4jSbTuZaj3m_XisZaDJh0CwPq6fOAp--BzxanpX5oiS3htrXgHGEKxdDSW4-vNbKC7Vsx7pQjnaJ2HG2nGjA"/>
+</div>
+</div>
+</nav>
+<main class="relative z-10 pt-[112px] pb-[80px] min-h-screen flex flex-col items-center px-margin-mobile md:px-margin-desktop">
+<header class="w-full max-w-container-max mb-8 text-center md:text-left">
+<p class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-secondary-container mb-2">Innovation Foundry v1.0</p>
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg italic">Forge New Possibilities</h1>
+</header>
+<div class="w-full max-w-container-max modal-gradient-border bg-surface-container rounded-lg p-unit md:p-12 overflow-hidden flex flex-col gap-gutter">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-6 mb-2">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h2 class="font-display-lg text-title-md">TECH_IDEAS.SH</h2>
+</div>
+<button onclick="generateIdeas()" class="px-6 py-2 border border-primary/30 font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-background transition-all active:scale-95 duration-200">GENERATE IDEAS</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<div class="lg:col-span-4 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-outline">Forge Parameters</span>
+</div>
+<div class="bg-surface-container-low p-6 border border-outline-variant/20 rounded flex flex-col gap-4">
+<label class="flex flex-col gap-1">
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-outline">Industry</span>
+<select id="industrySelect" class="bg-surface-container-lowest border border-outline-variant/30 text-on-surface font-label-sm text-[10px] py-2 px-3 focus:border-secondary transition-all focus:ring-0">
+<option value="">General / Any</option>
+<option value="Healthcare">Healthcare</option>
+<option value="Finance">Finance</option>
+<option value="Education">Education</option>
+<option value="E-commerce">E-commerce</option>
+<option value="SaaS">SaaS</option>
+<option value="Gaming">Gaming</option>
+<option value="Manufacturing">Manufacturing</option>
+<option value="Agriculture">Agriculture</option>
+<option value="Logistics">Logistics</option>
+</select>
+</label>
+<label class="flex flex-col gap-1">
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-outline">Skill Level</span>
+<select id="skillSelect" class="bg-surface-container-lowest border border-outline-variant/30 text-on-surface font-label-sm text-[10px] py-2 px-3 focus:border-secondary transition-all focus:ring-0">
+<option value="beginner">Beginner</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select>
+</label>
+<label class="flex flex-col gap-1">
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-outline">Goal</span>
+<select id="goalSelect" class="bg-surface-container-lowest border border-outline-variant/30 text-on-surface font-label-sm text-[10px] py-2 px-3 focus:border-secondary transition-all focus:ring-0">
+<option value="portfolio">Portfolio Building</option>
+<option value="startup">Startup / MVP</option>
+<option value="learning">Learning &amp; Practice</option>
+<option value="open-source">Open Source Contribution</option>
+</select>
+</label>
+<label class="flex flex-col gap-1">
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-outline">Tech Stack Preference</span>
+<select id="stackSelect" class="bg-surface-container-lowest border border-outline-variant/30 text-on-surface font-label-sm text-[10px] py-2 px-3 focus:border-secondary transition-all focus:ring-0">
+<option value="">Any Stack</option>
+<option value="JavaScript">JavaScript / TypeScript</option>
+<option value="Python">Python</option>
+<option value="Java">Java / JVM</option>
+<option value="Rust">Rust</option>
+<option value="Go">Go</option>
+<option value="C++">C / C++</option>
+<option value="DotNet">.NET / C#</option>
+<option value="Ruby">Ruby</option>
+<option value="PHP">PHP</option>
+<option value="Swift">Swift / iOS</option>
+<option value="Kotlin">Kotlin / Android</option>
+</select>
+</label>
+</div>
+</div>
+<div class="lg:col-span-8 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-outline">Generated Concepts</span>
+</div>
+<div id="ideasContainer" class="flex-1 flex flex-col gap-gutter min-h-[400px]">
+<div class="p-6 bg-surface-container-low border border-outline-variant/10 rounded flex items-center justify-center h-full">
+<div class="text-center">
+<span class="material-symbols-outlined text-4xl text-outline mb-2">auto_awesome</span>
+<p class="font-label-sm text-[10px] text-outline uppercase tracking-widest">Configure parameters and generate ideas</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="w-full max-w-container-max mt-20">
+<div class="flex flex-col md:flex-row items-center justify-between border-t border-outline-variant/30 pt-12 opacity-80">
+<div class="mb-8 md:mb-0">
+<h4 class="font-display-lg text-title-md mb-2">The Innovation Cycle</h4>
+<p class="text-on-surface-variant max-w-md text-sm">Every breakthrough begins as a spark. We fan those sparks into blueprints worthy of your craft.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter grayscale contrast-125 opacity-50">
+<div class="flex flex-col items-center"><span class="material-symbols-outlined text-4xl">wb_incandescent</span><span class="font-label-sm text-[10px] mt-2">IDEATE</span></div>
+<div class="flex flex-col items-center"><span class="material-symbols-outlined text-4xl">draw</span><span class="font-label-sm text-[10px] mt-2">BLUEPRINT</span></div>
+<div class="flex flex-col items-center"><span class="material-symbols-outlined text-4xl">build</span><span class="font-label-sm text-[10px] mt-2">FORGE</span></div>
+<div class="flex flex-col items-center"><span class="material-symbols-outlined text-4xl">rocket_launch</span><span class="font-label-sm text-[10px] mt-2">LAUNCH</span></div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-dim border-t border-outline-variant/30 w-full py-12 relative z-10">
+<div class="max-w-[1200px] mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-display-lg text-body-md text-primary">KnowledgeStack</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest text-center md:text-left">© 2026 KnowledgeStack Platform. HANDCRAFTED FOR ENGINEERS.</span>
+</div>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">DOCUMENTATION</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">PRIVACY POLICY</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">API STATUS</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">SUPPORT</a>
+</div>
+</div>
+</footer>
+<script>
+function escapeHtml(text) {
+    var d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+}
+
+function generateIdeas() {
+    var industry = document.getElementById('industrySelect').value;
+    var skill = document.getElementById('skillSelect').value;
+    var goal = document.getElementById('goalSelect').value;
+    var stack = document.getElementById('stackSelect').value;
+
+    document.getElementById('ideasContainer').innerHTML = '<div class="flex items-center justify-center h-full"><span class="material-symbols-outlined animate-spin text-secondary">sync</span><span class="font-label-sm text-[10px] text-outline uppercase tracking-widest ml-2">Forging ideas<span class="loading-dots"></span></span></div>';
+
+    fetch('/api/tech-ideas/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ industry: industry || null, skillLevel: skill, goal: goal, techStack: stack ? [stack] : [] })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        var ideas = data.ideas || [];
+        var html = '';
+        ideas.forEach(function(idea) {
+            var tagsHtml = (idea.tags || []).map(function(t) {
+                return '<span class="px-2 py-1 bg-surface-container-lowest border border-outline-variant/20 rounded text-[10px] font-label-sm text-on-surface-variant">' + escapeHtml(t) + '</span>';
+            }).join('');
+
+            var toolsHtml = '';
+            if (idea.tools && idea.tools.length) {
+                toolsHtml = '<div class="flex flex-wrap gap-2 mt-3">' + idea.tools.map(function(tool) {
+                    return '<span class="px-2 py-1 border border-secondary/20 text-secondary text-[10px] font-label-sm tracking-wider">' + escapeHtml(tool) + '</span>';
+                }).join('') + '</div>';
+            }
+
+            html += '<div class="idea-card p-6 bg-surface-container-low rounded flex flex-col gap-3">' +
+                '<div class="flex items-start justify-between">' +
+                '<div class="flex items-center gap-2">' +
+                '<span class="material-symbols-outlined text-secondary text-sm">construction</span>' +
+                '<h3 class="font-title-md text-sm uppercase font-bold tracking-tight text-primary">' + escapeHtml(idea.title) + '</h3>' +
+                '</div>' +
+                '<span class="text-[10px] font-label-sm text-outline uppercase">' + (idea.difficulty || '') + '</span>' +
+                '</div>' +
+                '<p class="text-on-surface-variant text-sm leading-relaxed">' + escapeHtml(idea.description) + '</p>' +
+                '<div class="flex flex-wrap gap-2 mt-1">' + tagsHtml + '</div>' +
+                toolsHtml +
+                (idea.marketTrend ? '<div class="mt-2 p-3 bg-background border border-outline-variant/10 rounded"><span class="text-[10px] font-label-sm text-tertiary-fixed-dim uppercase tracking-widest">Market Trend: </span><span class="text-on-surface-variant text-xs">' + escapeHtml(idea.marketTrend) + '</span></div>' : '') +
+                '</div>';
+        });
+        if (!ideas.length) {
+            html = '<div class="p-6 bg-surface-container-low border border-outline-variant/10 rounded text-center"><p class="text-on-surface-variant text-sm">No ideas generated. Try different parameters.</p></div>';
+        }
+        document.getElementById('ideasContainer').innerHTML = html;
+    })
+    .catch(function(err) {
+        document.getElementById('ideasContainer').innerHTML = '<div class="p-6 bg-surface-container-low border-l-4 border-error-container rounded text-center"><p class="text-error text-sm">Failed to generate ideas. Please try again later.</p></div>';
+        console.error('Generation error:', err);
+    });
+}
+
+document.addEventListener('mousemove', function(e) {
+    var x = (e.clientX / window.innerWidth - 0.5) * 20;
+    var y = (e.clientY / window.innerHeight - 0.5) * 20;
+    var bg = document.querySelector('.noise-bg');
+    if (bg) bg.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+});
+</script>
+</body>
+</html>

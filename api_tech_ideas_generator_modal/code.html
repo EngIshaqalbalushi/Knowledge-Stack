@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KnowledgeStack | Tech Ideas Generator</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=Manrope:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100..900&amp;family=Manrope:wght@100..900&amp;family=Playfair+Display:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#6a644f",
+                        "on-primary": "#35301e",
+                        "on-secondary-container": "#95baf6",
+                        "on-secondary-fixed-variant": "#1d477c",
+                        "on-tertiary-container": "#7b6100",
+                        "inverse-surface": "#e5e2e1",
+                        "outline-variant": "#4a473e",
+                        "secondary": "#a7c8ff",
+                        "primary-container": "#ebe2c8",
+                        "primary": "#ffffff",
+                        "tertiary-fixed-dim": "#e9c349",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "outline": "#959086",
+                        "secondary-container": "#20497f",
+                        "surface-container-highest": "#353535",
+                        "primary-fixed": "#ebe2c8",
+                        "on-tertiary": "#3c2f00",
+                        "inverse-primary": "#645e49",
+                        "surface-variant": "#353535",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed-dim": "#a7c8ff",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#cec6ad",
+                        "surface-bright": "#393939",
+                        "tertiary-container": "#ffe088",
+                        "surface-container": "#20201f",
+                        "error": "#ffb4ab",
+                        "tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#241a00",
+                        "tertiary-fixed": "#ffe088",
+                        "surface-dim": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#1f1c0b",
+                        "secondary-fixed": "#d5e3ff",
+                        "on-secondary-fixed": "#001b3c",
+                        "surface-tint": "#cec6ad",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "on-primary-fixed-variant": "#4c4733",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#131313",
+                        "on-secondary": "#003061",
+                        "surface": "#131313",
+                        "on-surface-variant": "#cbc6ba",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Playfair Display"],
+                        "label-sm": ["IBM Plex Sans"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-md": ["Manrope"],
+                        "title-md": ["Manrope"],
+                        "headline-lg": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .textured-bg {
+            background-image: url("https://www.transparenttextures.com/patterns/dark-leather.png");
+            background-color: #111111;
+        }
+        .modal-border {
+            border: 1px solid transparent;
+            border-image: linear-gradient(to bottom right, rgba(244, 235, 208, 0.3), rgba(244, 235, 208, 0.1)) 1;
+        }
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 9999;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+        }
+        .active-dot::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: #D4AF37;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen textured-bg selection:bg-secondary-container selection:text-on-secondary-container">
+<div class="noise-overlay"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full h-[72px] z-50 bg-background/80 backdrop-blur-xl border-b border-primary/20">
+<div class="max-w-[1200px] mx-auto px-margin-desktop flex items-center justify-between w-full h-full">
+<div class="flex items-center gap-12">
+<span class="font-display-lg text-title-md font-bold tracking-tighter text-primary">KnowledgeStack</span>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">HOME</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">RESEARCH</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">CODE REVIEW</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-primary relative active-dot" href="#">TECH IDEAS</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+<img alt="Lead Architect Profile" class="w-10 h-10 rounded-full border border-outline-variant/30 grayscale hover:grayscale-0 transition-all cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_d3OkDrafpS9Q6osTwYHjsXZurXKar9umCRwW6AU7O0clBGJvyRVncq9NZop0MM2G8UUB6oq83aItOSeOyai1ZDAtcrN5skrBnk2mma5s-vGCwc0nsGFngSVNNNsNtvatyyJqNS2P0aIVoWLbVtBdPgNenbY-UMGdotuHFOq9VbVgc1CxZIwrA3estYiDoCtbx7oSWhHBoJkLkGa86roJdGQNxV6iSCghhNJTUkYkkp-x8pcMP_vLkKXOrXpOxl2z2RgJzQreGOE"/>
+</div>
+</div>
+</nav>
+<main class="pt-[120px] pb-24 px-4 md:px-margin-desktop max-w-[1200px] mx-auto">
+<!-- Main Modal Workspace -->
+<div class="bg-[#1A1A1A] modal-border overflow-hidden flex flex-col md:flex-row min-h-[700px]">
+<!-- Sidebar Configuration -->
+<aside class="w-full md:w-80 border-b md:border-b-0 md:border-r border-outline-variant/30 p-gutter flex flex-col gap-8 bg-surface-container-lowest">
+<div>
+<h3 class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-6">Engine Parameters</h3>
+<div class="space-y-6">
+<div>
+<label class="block font-label-sm text-[10px] uppercase tracking-[0.2em] text-on-surface-variant mb-2">Complexity Floor</label>
+<select class="w-full bg-surface-container-low border border-outline-variant/30 text-body-md py-3 px-4 focus:border-secondary transition-all focus:ring-0 appearance-none text-on-surface">
+<option>L5 - System Architect</option>
+<option>L4 - Senior Lead</option>
+<option>L3 - Senior</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm text-[10px] uppercase tracking-[0.2em] text-on-surface-variant mb-2">Tech Stack Preference</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1 border border-secondary text-secondary font-label-sm text-[10px] uppercase tracking-tighter bg-secondary-container/10">Rust</button>
+<button class="px-3 py-1 border border-outline-variant/30 text-on-surface-variant font-label-sm text-[10px] uppercase tracking-tighter hover:border-primary transition-colors">Go</button>
+<button class="px-3 py-1 border border-outline-variant/30 text-on-surface-variant font-label-sm text-[10px] uppercase tracking-tighter hover:border-primary transition-colors">TypeScript</button>
+<button class="px-3 py-1 border border-outline-variant/30 text-on-surface-variant font-label-sm text-[10px] uppercase tracking-tighter hover:border-primary transition-colors">Zig</button>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-[10px] uppercase tracking-[0.2em] text-on-surface-variant mb-2">Inspiration Focus</label>
+<div class="space-y-3">
+<div class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 border border-outline-variant flex items-center justify-center group-hover:border-primary">
+<div class="w-2 h-2 bg-primary"></div>
+</div>
+<span class="text-body-md text-on-surface">Distributed Systems</span>
+</div>
+<div class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 border border-outline-variant flex items-center justify-center group-hover:border-primary"></div>
+<span class="text-body-md text-on-surface">ML/DevOps Bridge</span>
+</div>
+<div class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 border border-outline-variant flex items-center justify-center group-hover:border-primary"></div>
+<span class="text-body-md text-on-surface">Kernel-Space Utilities</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-8 border-t border-outline-variant/30">
+<button class="w-full py-4 border border-primary text-primary font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-surface-dim transition-all active:scale-95">
+                        Generate Blueprints
+                    </button>
+</div>
+</aside>
+<!-- Grid Content Area -->
+<section class="flex-1 p-gutter bg-surface-container">
+<header class="mb-10 flex flex-col md:flex-row justify-between items-end gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2">Engineered Opportunities</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-lg">High-fidelity technical project prompts designed for architectural rigor and operational scale.</p>
+</div>
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest border border-outline-variant/30 px-3 py-1">6 Matches Found</span>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Idea Card 1 -->
+<div class="bg-surface-container-low border border-outline-variant/30 p-8 group hover:border-secondary transition-all cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-secondary text-3xl">terminal</span>
+<span class="font-label-sm text-[10px] text-secondary tracking-widest uppercase bg-secondary-container/10 px-2 py-0.5">Scale: Enterprise</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary mb-3">AI Resume Auditor</h3>
+<p class="font-body-md text-on-surface-variant mb-6 text-sm">LLM-based parser that identifies architectural gaps in senior engineering profiles through vector-based skill mapping.</p>
+<div class="flex gap-4">
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">Python</span>
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">Pinecone</span>
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">OpenAI</span>
+</div>
+</div>
+<!-- Idea Card 2 -->
+<div class="bg-surface-container-low border border-outline-variant/30 p-8 group hover:border-secondary transition-all cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-secondary text-3xl">monitoring</span>
+<span class="font-label-sm text-[10px] text-secondary tracking-widest uppercase bg-secondary-container/10 px-2 py-0.5">Scale: Infrastructure</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary mb-3">GitMetrics Dashboard</h3>
+<p class="font-body-md text-on-surface-variant mb-6 text-sm">Visualizing repository velocity and contribution complexity using WebGL-based topology graphs.</p>
+<div class="flex gap-4">
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">Rust</span>
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">Wasm</span>
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">Three.js</span>
+</div>
+</div>
+<!-- Idea Card 3 -->
+<div class="bg-surface-container-low border border-outline-variant/30 p-8 group hover:border-secondary transition-all cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-secondary text-3xl">hub</span>
+<span class="font-label-sm text-[10px] text-secondary tracking-widest uppercase bg-secondary-container/10 px-2 py-0.5">Scale: Distributed</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary mb-3">Event-Sourced Ledger</h3>
+<p class="font-body-md text-on-surface-variant mb-6 text-sm">High-throughput transaction ledger leveraging Kafka streams and CRDTs for eventual consistency in offline-first nodes.</p>
+<div class="flex gap-4">
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">Go</span>
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">Kafka</span>
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">gRPC</span>
+</div>
+</div>
+<!-- Idea Card 4 -->
+<div class="bg-surface-container-low border border-outline-variant/30 p-8 group hover:border-secondary transition-all cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-secondary text-3xl">security</span>
+<span class="font-label-sm text-[10px] text-secondary tracking-widest uppercase bg-secondary-container/10 px-2 py-0.5">Scale: Cybersec</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary mb-3">eBPF Trace Guardian</h3>
+<p class="font-body-md text-on-surface-variant mb-6 text-sm">Low-level security agent monitoring system calls in containerized environments with zero-latency overhead.</p>
+<div class="flex gap-4">
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">C</span>
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">eBPF</span>
+<span class="text-[10px] font-label-sm text-outline tracking-wider uppercase">Kernel</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Featured Section (Asymmetric) -->
+<div class="mt-24 flex flex-col md:flex-row items-center gap-16">
+<div class="w-full md:w-1/2">
+<div class="relative">
+<img alt="Cybernetic Hardware Interface" class="w-full aspect-video object-cover modal-border" data-alt="A macro close-up of a high-tech custom server rack with deep mahogany wood panels and polished brass screws. The interior glows with a cool blue cybernetic light, highlighting precision-engineered copper heat sinks and meticulously organized fiber optic cables. The aesthetic is sophisticated industrial, blending traditional craftsmanship with advanced server technology in a dark, moody environment with soft focus in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASdHC6HyRNAJ5kDusSs5RNuBzFb6BnHlBwAfgAfiVyN5kyxY6ShV199POfuWqalQtCEid5dO71P0bKZtbVP96o4aHRLEBhiTnlNvbL-_G9Gl9FIrjKvh5iYLal5f5_HkZHnjq7yGa_Nfp6E8rhrJ46Q5fPwepLAa4lohLEXGGwI0K-KhzrMHu7meLgtNdu8ZFZa5SK8wA3rW4etPIuGXxyC45mbzKMgGvBG8VEXVMAHtzc3S4XF_puFilEqlh1hkF0jvOfmnWmxEQ"/>
+<div class="absolute -bottom-6 -right-6 bg-surface-container-highest p-8 modal-border hidden md:block">
+<span class="font-display-lg text-title-md text-secondary block mb-2">99.9%</span>
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant">Systemic Viability</span>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-[0.3em] mb-4 block">Architectural Philosophy</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6 leading-tight">Artifacts Over Disposable Tools.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">We believe engineering should be treated as a craft. Every idea generated through our platform isn't just a prototype; it's designed to be a permanent piece of your professional legacy. Focus on the durability of the code, not just the utility of the feature.</p>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4 border-l-2 border-secondary pl-6 py-2">
+<span class="text-primary font-title-md">Performance First</span>
+<span class="text-on-surface-variant text-sm">— Always optimize for the kernel.</span>
+</div>
+<div class="flex items-center gap-4 border-l-2 border-outline-variant/30 pl-6 py-2">
+<span class="text-primary font-title-md">Security Native</span>
+<span class="text-on-surface-variant text-sm">— Zero-trust from line one.</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-surface-dim border-t border-outline-variant/30">
+<div class="max-w-[1200px] mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter">
+<span class="font-display-lg text-body-md text-primary tracking-tighter">KnowledgeStack</span>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">DOCUMENTATION</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">PRIVACY POLICY</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">API STATUS</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">SUPPORT</a>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 KnowledgeStack PLATFORM. HANDCRAFTED FOR ENGINEERS.</p>
+</div>
+</footer>
+<script>
+        // Micro-interactions for Idea Cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Atmospheric parallax effect on the background texture
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.querySelector('.noise-overlay').style.backgroundPosition = `${x * 10}px ${y * 10}px`;
+        });
+    </script>
+</body></html>

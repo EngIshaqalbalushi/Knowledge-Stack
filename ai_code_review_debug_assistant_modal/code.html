@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KnowledgeStack | Code Review &amp; Debug Assistant</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Manrope:wght@400;600&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#6a644f",
+                        "on-primary": "#35301e",
+                        "on-secondary-container": "#95baf6",
+                        "on-secondary-fixed-variant": "#1d477c",
+                        "on-tertiary-container": "#7b6100",
+                        "inverse-surface": "#e5e2e1",
+                        "outline-variant": "#4a473e",
+                        "secondary": "#a7c8ff",
+                        "primary-container": "#ebe2c8",
+                        "primary": "#ffffff",
+                        "tertiary-fixed-dim": "#e9c349",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "outline": "#959086",
+                        "secondary-container": "#20497f",
+                        "surface-container-highest": "#353535",
+                        "primary-fixed": "#ebe2c8",
+                        "on-tertiary": "#3c2f00",
+                        "inverse-primary": "#645e49",
+                        "surface-variant": "#353535",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed-dim": "#a7c8ff",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#cec6ad",
+                        "surface-bright": "#393939",
+                        "tertiary-container": "#ffe088",
+                        "surface-container": "#20201f",
+                        "error": "#ffb4ab",
+                        "tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#241a00",
+                        "tertiary-fixed": "#ffe088",
+                        "surface-dim": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#1f1c0b",
+                        "secondary-fixed": "#d5e3ff",
+                        "on-secondary-fixed": "#001b3c",
+                        "surface-tint": "#cec6ad",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "on-primary-fixed-variant": "#4c4733",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#131313",
+                        "on-secondary": "#003061",
+                        "surface": "#131313",
+                        "on-surface-variant": "#cbc6ba",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Playfair Display"],
+                        "label-sm": ["IBM Plex Sans"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-md": ["Manrope"],
+                        "title-md": ["Manrope"],
+                        "headline-lg": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .noise-bg {
+            background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+            background-blend-mode: overlay;
+        }
+        .modal-gradient-border {
+            border: 1px solid transparent;
+            background: linear-gradient(#1A1A1A, #1A1A1A) padding-box,
+                        linear-gradient(to bottom right, rgba(244, 235, 208, 0.3), rgba(244, 235, 208, 0.05)) border-box;
+        }
+        .parchment-accent {
+            background-color: #EBE2C8;
+            color: #1F1C0B;
+        }
+        .brass-dot::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: #D4AF37;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden selection:bg-secondary/30">
+<div class="fixed inset-0 noise-bg pointer-events-none opacity-40 z-0"></div>
+<nav class="fixed top-0 w-full h-[72px] z-50 bg-background/80 backdrop-blur-xl border-b border-primary/20">
+<div class="max-w-[1200px] mx-auto px-margin-desktop flex items-center justify-between w-full h-full">
+<div class="flex items-center gap-gutter">
+<span class="font-display-lg text-title-md font-bold tracking-tighter text-primary">KnowledgeStack</span>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">HOME</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">RESEARCH</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-primary relative brass-dot" href="#">CODE REVIEW</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">TECH IDEAS</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">settings</span>
+<img alt="Lead Architect Profile" class="w-10 h-10 rounded-full border border-primary/20 object-cover" data-alt="A professional headshot of a senior software engineer with a focused expression, wearing a minimalist black turtleneck. The lighting is dramatic and cinematic, with a dark, textured background that matches the sophisticated industrial aesthetic of a high-end tech platform. The overall mood is one of quiet authority and technical expertise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6m-1dAYx1-DJLjcnzei7EtQHcnsgAWrAE1J0YvnI6QDMK5oOBL_OKEWMvBsg6a7afkOWf6yFAUBnmhImys2Uq6x9bx06eVH97jE_9znCR6l-X9krYSPBNZesDTicDZT4VzlptlfYeIvhCXATnhik9wKUOXqOI-tyMmGoFDKyn9G4i8uvqNLJpHtO4jSbTuZaj3m_XisZaDJh0CwPq6fOAp--BzxanpX5oiS3htrXgHGEKxdDSW4-vNbKC7Vsx7pQjnaJ2HG2nGjA"/>
+</div>
+</div>
+</nav>
+<main class="relative z-10 pt-[112px] pb-[80px] min-h-screen flex flex-col items-center px-margin-mobile md:px-margin-desktop">
+<header class="w-full max-w-container-max mb-12 text-center md:text-left">
+<p class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-secondary-container mb-2">Diagnostic Shell v4.2</p>
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg italic">The Engineer's Workbench</h1>
+</header>
+<div class="w-full max-w-container-max modal-gradient-border bg-surface-container rounded-lg p-unit md:p-12 overflow-hidden flex flex-col gap-gutter">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-6 mb-2">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<h2 class="font-display-lg text-title-md">CODE_REVIEW.SH</h2>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2 border border-primary/30 font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-background transition-all active:scale-95 duration-200">
+                        ANALYZE &amp; FIX
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter min-h-[500px]">
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-outline">Source Snippet</span>
+<span class="font-label-sm text-[10px] text-outline italic">JavaScript / Node.js</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-6 border border-outline-variant/20 rounded font-mono text-sm leading-relaxed overflow-auto relative">
+<div class="absolute left-0 top-0 h-full w-10 bg-surface-container-low border-r border-outline-variant/10 flex flex-col items-center pt-6 text-outline-variant/50 select-none">
+<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+</div>
+<div class="pl-8 text-on-surface-variant">
+<pre><code><span class="text-secondary-fixed-dim">async function</span> <span class="text-primary-fixed-dim">processData</span>(input) {
+  <span class="text-on-secondary-container">// Potential memory leak here</span>
+  <span class="text-secondary-fixed-dim">const</span> results = [];
+  <span class="text-secondary-fixed-dim">for</span> (<span class="text-secondary-fixed-dim">let</span> i = <span class="text-tertiary-fixed-dim">0</span>; i &lt; input.<span class="text-on-tertiary-fixed-dim">length</span>; i++) {
+    <span class="text-secondary-fixed-dim">const</span> item = <span class="text-secondary-fixed-dim">await</span> <span class="text-primary-fixed-dim">fetchInternal</span>(input[i]);
+    results.<span class="text-primary-fixed-dim">push</span>(item);
+  }
+  <span class="text-secondary-fixed-dim">return</span> results;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-[10px] uppercase tracking-widest text-outline">AI Debug Insights</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-sm text-[10px] text-error uppercase">2 Vulnerabilities Found</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-gutter">
+<div class="p-6 bg-surface-container-high border-l-4 border-secondary-container rounded flex flex-col gap-3">
+<div class="flex items-center gap-2 text-on-secondary-container">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<h3 class="font-title-md text-sm uppercase font-bold tracking-tight">Performance Bottleneck</h3>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                                Sequential execution of asynchronous calls within a loop detected. This will block the event loop for the duration of all network requests.
+                            </p>
+<div class="mt-2 p-3 bg-background border border-outline-variant/20 rounded">
+<code class="text-xs text-secondary-fixed">Use Promise.all(input.map(...)) for parallel execution.</code>
+</div>
+</div>
+<div class="p-6 bg-surface-container-high border-l-4 border-error-container rounded flex flex-col gap-3">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-sm">security</span>
+<h3 class="font-title-md text-sm uppercase font-bold tracking-tight">Security Risk</h3>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                                input[i] parameter is passed directly to fetchInternal without validation. High risk of injection if the source is untrusted.
+                            </p>
+<button class="mt-2 w-full parchment-accent font-label-sm text-[11px] py-2 uppercase font-bold tracking-[0.2em] hover:brightness-110 transition-all">
+                                APPLY SUGGESTIONS
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mt-4">
+<div class="p-4 bg-surface-container-low border border-outline-variant/30 rounded flex flex-col gap-2">
+<span class="font-label-sm text-[10px] text-outline uppercase">Code Complexity</span>
+<div class="flex items-end gap-3">
+<span class="text-headline-lg leading-none font-bold">O(n)</span>
+<div class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden mb-1">
+<div class="h-full bg-on-tertiary-fixed-variant" style="width: 40%"></div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low border border-outline-variant/30 rounded flex flex-col gap-2">
+<span class="font-label-sm text-[10px] text-outline uppercase">Security Rating</span>
+<div class="flex items-end gap-3">
+<span class="text-headline-lg leading-none font-bold text-error">D-</span>
+<div class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden mb-1">
+<div class="h-full bg-error" style="width: 15%"></div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low border border-outline-variant/30 rounded flex flex-col gap-2">
+<span class="font-label-sm text-[10px] text-outline uppercase">Engine Overhead</span>
+<div class="flex items-end gap-3">
+<span class="text-headline-lg leading-none font-bold">Low</span>
+<div class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden mb-1">
+<div class="h-full bg-on-secondary-container" style="width: 20%"></div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low border border-outline-variant/30 rounded flex flex-col gap-2">
+<span class="font-label-sm text-[10px] text-outline uppercase">Refactor Index</span>
+<div class="flex items-end gap-3">
+<span class="text-headline-lg leading-none font-bold">High</span>
+<div class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden mb-1">
+<div class="h-full bg-tertiary-fixed-dim" style="width: 85%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="w-full max-w-container-max mt-20">
+<div class="flex flex-col md:flex-row items-center justify-between border-t border-outline-variant/30 pt-12 opacity-80">
+<div class="mb-8 md:mb-0">
+<h4 class="font-display-lg text-title-md mb-2">Heritage Engineering</h4>
+<p class="text-on-surface-variant max-w-md text-sm">We treat software development as a craft, honoring the principles of durability and precision passed down through generations of masters.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter grayscale contrast-125 opacity-50">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl">precision_manufacturing</span>
+<span class="font-label-sm text-[10px] mt-2">FORGED</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl">verified_user</span>
+<span class="font-label-sm text-[10px] mt-2">DURABLE</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl">history_edu</span>
+<span class="font-label-sm text-[10px] mt-2">LEGACY</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl">architecture</span>
+<span class="font-label-sm text-[10px] mt-2">PRECISION</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-dim border-t border-outline-variant/30 w-full py-12 relative z-10">
+<div class="max-w-[1200px] mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-display-lg text-body-md text-primary">KnowledgeStack</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest text-center md:text-left">© 2024 KnowledgeStack PLATFORM. HANDCRAFTED FOR ENGINEERS.</span>
+</div>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">DOCUMENTATION</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">PRIVACY POLICY</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">API STATUS</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">SUPPORT</a>
+</div>
+</div>
+</footer>
+<script>
+        // Subtle mouse tracking interaction for background texture
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            const bg = document.querySelector('.noise-bg');
+            if (bg) {
+                bg.style.transform = `translate(${x}px, ${y}px)`;
+            }
+        });
+
+        // Button hover sounds or haptic mimics (visual only)
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.boxShadow = '0 0 15px rgba(244, 235, 208, 0.1)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body></html>

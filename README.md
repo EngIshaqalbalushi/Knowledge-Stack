@@ -93,14 +93,22 @@ JavaScript, TypeScript, Python, Java, Rust, Go, C++, C#, Ruby, PHP, Swift, Kotli
 ## Quick Start
 
 ```bash
+npm install
+npm run build:css
 docker compose up -d
 ```
 
 Open http://localhost:8080
 
+### Deployed Site
+
+Open https://architect-platform.containers.snapdeploy.dev
+
 ### Build from source
 
 ```bash
+npm install
+npm run build:css
 docker compose build --no-cache
 docker compose up -d
 ```

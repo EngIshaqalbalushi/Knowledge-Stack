@@ -5,71 +5,9 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>KnowledgeStack | DevResearch AI</title>
 <link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="/static/css/tailwind.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Manrope:wght@400;600&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script>
-tailwind.config = {
-    darkMode: "class",
-    theme: {
-        extend: {
-            "colors": {
-                "on-primary-container": "#6a644f",
-                "on-primary": "#35301e",
-                "on-secondary-container": "#95baf6",
-                "on-secondary-fixed-variant": "#1d477c",
-                "on-tertiary-container": "#7b6100",
-                "inverse-surface": "#e5e2e1",
-                "outline-variant": "#4a473e",
-                "secondary": "#a7c8ff",
-                "primary-container": "#ebe2c8",
-                "primary": "#ffffff",
-                "tertiary-fixed-dim": "#e9c349",
-                "on-surface": "#e5e2e1",
-                "surface-container-low": "#1c1b1b",
-                "outline": "#959086",
-                "secondary-container": "#20497f",
-                "surface-container-highest": "#353535",
-                "primary-fixed": "#ebe2c8",
-                "on-tertiary": "#3c2f00",
-                "inverse-primary": "#645e49",
-                "surface-variant": "#353535",
-                "on-background": "#e5e2e1",
-                "secondary-fixed-dim": "#a7c8ff",
-                "error-container": "#93000a",
-                "inverse-on-surface": "#313030",
-                "primary-fixed-dim": "#cec6ad",
-                "surface-bright": "#393939",
-                "tertiary-container": "#ffe088",
-                "surface-container": "#20201f",
-                "error": "#ffb4ab",
-                "tertiary": "#ffffff",
-                "on-tertiary-fixed": "#241a00",
-                "tertiary-fixed": "#ffe088",
-                "surface-dim": "#131313",
-                "on-error-container": "#ffdad6",
-                "on-primary-fixed": "#1f1c0b",
-                "secondary-fixed": "#d5e3ff",
-                "on-secondary-fixed": "#001b3c",
-                "surface-tint": "#cec6ad",
-                "surface-container-lowest": "#0e0e0e",
-                "on-tertiary-fixed-variant": "#574500",
-                "on-primary-fixed-variant": "#4c4733",
-                "surface-container-high": "#2a2a2a",
-                "background": "#131313",
-                "on-secondary": "#003061",
-                "surface": "#131313",
-                "on-surface-variant": "#cbc6ba",
-                "on-error": "#690005"
-            },
-            borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
-            spacing: { "container-max": "1200px", "margin-mobile": "16px", "margin-desktop": "64px", unit: "8px", gutter: "24px" },
-            fontFamily: { "display-lg": ["Playfair Display"], "label-sm": ["IBM Plex Sans"], "headline-lg-mobile": ["Playfair Display"], "body-md": ["Manrope"], "title-md": ["Manrope"], "headline-lg": ["Playfair Display"] },
-            fontSize: { "display-lg": ["64px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }], "label-sm": ["12px", { lineHeight: "1.4", letterSpacing: "0.1em", fontWeight: "600" }], "headline-lg-mobile": ["32px", { lineHeight: "1.2", fontWeight: "600" }], "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }], "title-md": ["20px", { lineHeight: "1.5", letterSpacing: "0.05em", fontWeight: "600" }], "headline-lg": ["40px", { lineHeight: "1.2", fontWeight: "600" }] }
-        },
-    },
-}
-</script>
 <style>
 .noise-bg { background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png"); background-blend-mode: overlay; }
 .modal-gradient-border { border: 1px solid transparent; background: linear-gradient(#1A1A1A, #1A1A1A) padding-box, linear-gradient(to bottom right, rgba(244, 235, 208, 0.3), rgba(244, 235, 208, 0.05)) border-box; }
